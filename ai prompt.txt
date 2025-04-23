@@ -1,0 +1,120 @@
+create simple 2d platformer for unity - step by step with description 
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+🎮 Step-by-Step Guide: Simple 2D Platformer in Unity
+✅ Step 1: Set Up a New Unity Project
+Open Unity Hub.
+
+Click New Project.
+
+Choose 2D Core or 2D template.
+
+Name your project (e.g., Simple2DPlatformer) and click Create.
+
+🗂️ Step 2: Set Up the Scene
+In the Hierarchy, right-click and create a 2D Object > Sprite > Square.
+
+This will be your Ground.
+
+Rename it to Ground.
+
+Scale it (Scale X = 10, Y = 1) and position it at (0, -4, 0).
+
+Add a BoxCollider2D and Rigidbody2D to Ground.
+
+In Rigidbody2D, check "Body Type" = Static (so it doesn't fall).
+
+Create another square sprite for the Player.
+
+Rename it to Player.
+
+Position it above the ground (e.g., (0, 0, 0)).
+
+Add:
+
+BoxCollider2D
+
+Rigidbody2D
+
+🧠 Step 3: Create the Player Controller Script
+Create a folder Scripts.
+
+Right-click in that folder → Create > C# Script → name it PlayerController.
+
+Double-click to open it in your code editor.
+
+Replace the code with this:
+
+csharp
+Copy
+Edit
+using UnityEngine;
+
+public class PlayerController : MonoBehaviour
+{
+    public float moveSpeed = 5f;
+    public float jumpForce = 10f;
+    private Rigidbody2D rb;
+    private bool isGrounded;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    void Update()
+    {
+        float moveInput = Input.GetAxis("Horizontal");
+        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.contacts[0].normal.y > 0.5f)
+        {
+            isGrounded = true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        isGrounded = false;
+    }
+}
+Attach this script to your Player GameObject.
+
+🧱 Step 4: Add Platforms
+Create more Sprite > Square objects.
+
+Scale and position them around the scene to make platforms.
+
+Add BoxCollider2D to each one.
+
+Set Rigidbody2D to Static if you want them to stay in place.
+
+🎨 Step 5: Add Some Visuals (Optional)
+Replace square sprites with character and tile sprites (drag in PNGs).
+
+Use the Sprite Renderer component to change visuals.
+
+Import free 2D assets from the Unity Asset Store if you'd like.
+
+🚀 Step 6: Play and Test
+Click Play in the Unity Editor.
+
+Use A/D or Arrow Keys to move.
+
+Press Space to jump.
+
+🔧 Bonus Tips
+Add a CameraFollow script to make the camera follow the player.
+
+Add animation using Animator and Animation components.
+
+Add enemies, coins, or checkpoints later as upgrades!
+
